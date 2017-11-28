@@ -9,10 +9,15 @@ public class Logic {
 	
 	public Logic(PApplet app) {
 		this.app = app;
+		ui = new UserInterface(this, app);
 	}
 	
 	public void display() {
-		
+		ui.screens();
+	}
+	
+	public void click() {
+		ui.click();
 	}
 
 	//GETTERS AND SETTERS

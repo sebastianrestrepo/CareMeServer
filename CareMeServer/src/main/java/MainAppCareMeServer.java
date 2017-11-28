@@ -10,12 +10,24 @@ public class MainAppCareMeServer extends PApplet {
 
 	@Override
 	public void settings() {
-		size(1200, 700);
+		fullScreen();
 	}
 
 	@Override
 	public void setup() {
+		imageMode(CENTER);
 		log = new Logic(this);
+	}
+
+	@Override
+	public void draw() {
+		log.display();
+	}
+
+	@Override
+	public void mouseClicked() {
+		log.click();
+		System.out.println("Mouse X: " + mouseX + "Mouse Y: " + mouseY);
 	}
 
 }
