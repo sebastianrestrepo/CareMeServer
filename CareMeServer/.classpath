@@ -23,5 +23,6 @@
 	<classpathentry kind="lib" path="libs/jogl-all.jar"/>
 	<classpathentry kind="lib" path="library/jssc.jar"/>
 	<classpathentry kind="lib" path="library/serial.jar"/>
+	<classpathentry kind="lib" path="libs/controlP5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

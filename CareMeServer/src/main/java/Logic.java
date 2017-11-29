@@ -10,16 +10,23 @@ public class Logic {
 	public Logic(PApplet app) {
 		this.app = app;
 		ui = new UserInterface(this, app);
+		ui.start();
+		a = new ArduinoConection(app);
 	}
 	
 	public void display() {
 		ui.screens();
+		a.read();
 	}
 	
 	public void click() {
 		ui.click();
 	}
 
+	public void key() {
+		ui.key();
+	}
+	
 	//GETTERS AND SETTERS
 	public UserInterface getUi() {
 		return ui;
