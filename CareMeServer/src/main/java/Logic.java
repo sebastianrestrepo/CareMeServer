@@ -6,29 +6,61 @@ public class Logic {
 	private UserInterface ui;
 	private ArduinoConection a;
 	private Firebase f;
-	
+	private int screens = 1;
+
 	public Logic(PApplet app) {
 		this.app = app;
 		ui = new UserInterface(this, app);
 		ui.start();
 		a = new ArduinoConection(app);
-		f= new Firebase();
 	}
-	
+
 	public void display() {
-		ui.screens();
+		screens();
 		a.read();
 	}
-	
+
+	public void screens() {
+		switch (screens) {
+		case 1:
+			ui.inicio();
+			break;
+		case 2:
+			ui.home();
+			ui.showHumidity();
+			//f.sendData();
+			//f.readData();
+			break;
+		}
+	}
+
 	public void click() {
-		ui.click();
+		switch (screens) {
+		case 1:
+			if (app.mouseX > 525 && app.mouseX < 728 && app.mouseY > 627 && app.mouseY < 661) {
+				screens = 2;
+				f = new Firebase(app, this);
+				f.initiateProject();
+				f.start();
+			}
+			break;
+		}
 	}
 
 	public void key() {
-		ui.key();
+		switch (screens) {
+		case 1:
+			if(app.key == app.ENTER) {
+				screens = 2;
+				f = new Firebase(app, this);
+				f.initiateProject();
+				f.start();
+			}
+			break;
+		}
 	}
-	
-	//GETTERS AND SETTERS
+
+	// GETTERS AND SETTERS
 	public UserInterface getUi() {
 		return ui;
 	}
@@ -52,5 +84,5 @@ public class Logic {
 	public void setF(Firebase f) {
 		this.f = f;
 	}
-	
+
 }

@@ -25,7 +25,7 @@ public class MainAppCareMeServer extends PApplet {
 	}
 
 	@Override
-	public void mouseClicked() {
+	public void mouseReleased() {
 		log.click();
 		System.out.println("Mouse X: " + mouseX + "Mouse Y: " + mouseY);
 	}

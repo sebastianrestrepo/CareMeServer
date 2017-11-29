@@ -13,12 +13,13 @@ public class UserInterface extends Thread {
 	private PImage[] intro;
 	private PFont pnBold, pnRegular, pnRegularBig;
 	private int frameIntro;
-	private int humidity = 127;
+	private int humidity;
 	private boolean live = true;
 	private boolean play;
 	private boolean loaded = false;
 	private String projectName;
 	private String time;
+	private int timeInt;
 	private int num;
 	private ControlP5 cp5;
 
@@ -80,17 +81,7 @@ public class UserInterface extends Thread {
 		app.text(humidity + "%", app.width / 2 + 180, 298 + 237);
 	}
 
-	public void screens() {
-		switch (screens) {
-		case 1:
-			inicio();
-			break;
-		case 2:
-			home();
-			showHumidity();
-			break;
-		}
-	}
+
 
 	public void inicio() {
 		app.image(intro[frameIntro], app.width / 2, app.height / 2);
@@ -100,6 +91,7 @@ public class UserInterface extends Thread {
 			cp5.get("").show();
 		}
 		cp5.get(" ").hide();
+		projectName = cp5.get(Textfield.class, "").getText();
 	}
 	
 	public void textField() {
@@ -119,12 +111,19 @@ public class UserInterface extends Thread {
 		        	  cp5.addTextfield(" ")
 		  		    .setPosition(325, 404)
 		  		      .setSize(71, 71)
+		  		       .setText("2")
 		  		        .setFont(pnRegularBig)
 		  		            .setColor(gris).setColorForeground(transp).setColorBackground(transp).setColorActive(transp).setColorLabel(transp).align(ControlP5.CENTER, ControlP5.CENTER, ControlP5.CENTER, ControlP5.CENTER);;;
 		  		              ;
+		  		              
+		  		    		time = cp5.get(Textfield.class, " ").getText();
+		  		  		System.out.println("Time: " + time);
+		  		  		timeInt = Integer.parseInt(time);
+		  		  		System.out.println("timeInt: " + timeInt);
 	}
 
 	public void home() {
+		humidity = logic.getF().getHumidity();
 		app.image(home, app.width / 2, app.height / 2);
 		app.image(planta, app.width / 2, app.height / 2 + 25);
 		app.image(cerrarSesion, app.width / 2 + 493, app.height - 45);
@@ -154,11 +153,6 @@ public class UserInterface extends Thread {
 
 	public void click() {
 		switch (screens) {
-		case 1:
-			if(app.mouseX > 525 && app.mouseX < 728 && app.mouseY > 627 && app.mouseY < 661) {
-				screens = 2;
-			}
-			break;
 		case 2:
 			if (app.mouseX > 52 && app.mouseX < 246 && app.mouseY > 733 && app.mouseY < 775) {
 				play = !play;
@@ -171,19 +165,9 @@ public class UserInterface extends Thread {
 	}
 	
 	public void key() {
-		switch (screens) {
-		case 1:
-			if(app.key == app.ENTER) {
-				screens = 2;
-			}
-			break;
-		}
+
 	}
 
-	public void readStrings() {
-		projectName = cp5.get(Textfield.class, "").getText();
-		time = cp5.get(Textfield.class, " ").getText();
-	}
 	
 	//GETTERS Y SETTERS
 
@@ -210,6 +194,15 @@ public class UserInterface extends Thread {
 	public void setTime(String time) {
 		this.time = time;
 	}
+
+	public int getTimeInt() {
+		return timeInt;
+	}
+
+	public void setTimeInt(int timeInt) {
+		this.timeInt = timeInt;
+	}
+	
 
 	// FIN DE LA CLASE
 }

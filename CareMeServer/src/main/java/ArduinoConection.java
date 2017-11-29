@@ -5,6 +5,8 @@ public class ArduinoConection {
 
 	private PApplet app;
 	private Serial port;
+	private int humidity;
+
 	public ArduinoConection(PApplet app) {
 		this.app = app;
 		port = new Serial(app, Serial.list()[2], 9600);
@@ -12,18 +14,19 @@ public class ArduinoConection {
 
 	public void read() {
 		if (port.available() > 0) {
-			int humidity = port.read();
-			//System.out.print("Arduino dice:" + humidity +"\n");
+			//if (port.read() != 13 && port.read() != -1) {
+				humidity = port.read();
+			//}
+			 System.out.print("Arduino dice:" + humidity + "\n");
 		}
 	}
-	
-	public void serialEvent(Serial s) {
-		/*
-		if (puerto.available() > 0) {
-			int humidity = s.read();
-			System.out.print("Arduino dice:" + humidity);
-		}
-		*/
+
+	public int getHumidity() {
+		return humidity;
+	}
+
+	public void setHumidity(int humidity) {
+		this.humidity = humidity;
 	}
 
 }
