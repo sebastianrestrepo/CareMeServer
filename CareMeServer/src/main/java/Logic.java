@@ -5,7 +5,7 @@ public class Logic {
 	private PApplet app;
 	private UserInterface ui;
 	private ArduinoConection a;
-	private Firebase f ;
+	private Firebase f;
 	
 	public Logic(PApplet app) {
 		this.app = app;
