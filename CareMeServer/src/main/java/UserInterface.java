@@ -1,4 +1,5 @@
 import controlP5.ControlP5;
+import controlP5.Textfield;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
@@ -16,7 +17,8 @@ public class UserInterface extends Thread {
 	private boolean live = true;
 	private boolean play;
 	private boolean loaded = false;
-	private String projectName = "";
+	private String projectName;
+	private String time;
 	private int num;
 	private ControlP5 cp5;
 
@@ -56,7 +58,7 @@ public class UserInterface extends Thread {
 	public void load() {
 		intro = new PImage[82];
 		for (int i = 0; i < intro.length; i++) {
-			intro[i] = app.loadImage("../data/Intro/intro_" + i + ".png");
+			intro[i] = app.loadImage("../data/Intro/intro" + i + ".png");
 		}
 		inicio = app.loadImage("../data/inicio.png");
 		home = app.loadImage("../data/home.png");
@@ -92,7 +94,6 @@ public class UserInterface extends Thread {
 
 	public void inicio() {
 		app.image(intro[frameIntro], app.width / 2, app.height / 2);
-		app.text(projectName, app.width / 2, app.height / 2);
 		if(frameIntro<80) {
 			cp5.get("").hide();
 		} else {
@@ -162,12 +163,52 @@ public class UserInterface extends Thread {
 			if (app.mouseX > 52 && app.mouseX < 246 && app.mouseY > 733 && app.mouseY < 775) {
 				play = !play;
 			}
+			if (app.mouseX > 1035 && app.mouseX < 1235 && app.mouseY > 736 && app.mouseY < 776) {
+				screens = 1;
+			}
+			break;
+		}
+	}
+	
+	public void key() {
+		switch (screens) {
+		case 1:
+			if(app.key == app.ENTER) {
+				screens = 2;
+			}
 			break;
 		}
 	}
 
-	public void key() {
+	public void readStrings() {
+		projectName = cp5.get(Textfield.class, "").getText();
+		time = cp5.get(Textfield.class, " ").getText();
+	}
+	
+	//GETTERS Y SETTERS
 
+	public boolean isPlay() {
+		return play;
+	}
+
+	public void setPlay(boolean play) {
+		this.play = play;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 	// FIN DE LA CLASE

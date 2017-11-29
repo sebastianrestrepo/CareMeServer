@@ -12,6 +12,7 @@ public class Logic {
 		ui = new UserInterface(this, app);
 		ui.start();
 		a = new ArduinoConection(app);
+		f= new Firebase();
 	}
 	
 	public void display() {

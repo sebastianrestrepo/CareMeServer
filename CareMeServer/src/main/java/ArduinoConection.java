@@ -4,16 +4,15 @@ import processing.serial.Serial;
 public class ArduinoConection {
 
 	private PApplet app;
-	private Serial puerto;
-
+	private Serial port;
 	public ArduinoConection(PApplet app) {
 		this.app = app;
-		puerto = new Serial(app, Serial.list()[2], 9600);
+		port = new Serial(app, Serial.list()[2], 9600);
 	}
 
 	public void read() {
-		if (puerto.available() > 0) {
-			int humidity = puerto.read();
+		if (port.available() > 0) {
+			int humidity = port.read();
 			//System.out.print("Arduino dice:" + humidity +"\n");
 		}
 	}
