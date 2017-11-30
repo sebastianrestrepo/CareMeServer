@@ -11,15 +11,15 @@ public class UserInterface extends Thread {
 	private int screens = 1;
 	private PImage inicio, home, datos, pausa, pausaVerde, reanudar, reanudarVerde, saludo, cerrarSesion, planta;
 	private PImage[] intro;
-	private PFont pnBold, pnRegular, pnRegularBig;
+	private PFont pnBold, pnRegular, pnBoldTwo;
 	private int frameIntro;
 	private int humidity;
 	private boolean live = true;
-	private boolean play;
+	private boolean play = true;
 	private boolean loaded = false;
 	private String projectName;
-	private String time;
-	private int timeInt;
+	private String idealH;
+	private int idealInt;
 	private int num;
 	private ControlP5 cp5;
 
@@ -28,10 +28,10 @@ public class UserInterface extends Thread {
 		this.app = app;
 		load();
 		cp5 = new ControlP5(app);
-				
+
 		pnRegular = app.createFont("../data/Proxima Nova Regular.ttf", 18);
-		pnRegularBig = app.createFont("../data/Proxima Nova Regular.ttf", 42);
-		
+		pnBoldTwo = app.createFont("../data/Proxima Nova Bold.ttf", 65);
+
 		textField();
 	}
 
@@ -63,7 +63,7 @@ public class UserInterface extends Thread {
 		}
 		inicio = app.loadImage("../data/inicio.png");
 		home = app.loadImage("../data/home.png");
-		datos = app.loadImage("../data/datos.png");
+		datos = app.loadImage("../data/ideal.png");
 		pausa = app.loadImage("../data/pausa.png");
 		pausaVerde = app.loadImage("../data/pausaVerde.png");
 		reanudar = app.loadImage("../data/reanudar.png");
@@ -81,11 +81,9 @@ public class UserInterface extends Thread {
 		app.text(humidity + "%", app.width / 2 + 180, 298 + 237);
 	}
 
-
-
 	public void inicio() {
 		app.image(intro[frameIntro], app.width / 2, app.height / 2);
-		if(frameIntro<80) {
+		if (frameIntro < 80) {
 			cp5.get("").hide();
 		} else {
 			cp5.get("").show();
@@ -93,33 +91,31 @@ public class UserInterface extends Thread {
 		cp5.get(" ").hide();
 		projectName = cp5.get(Textfield.class, "").getText();
 	}
-	
+
 	public void textField() {
 		int blanco = app.color(255);
 		int transp = app.color(89, 239, 163, 1);
 		int negro = app.color(60, 60, 59);
 		int gris = app.color(130, 130, 130);
 		int verde = app.color(89, 239, 163);
-		
-		  cp5.addTextfield("")
-		    .setPosition(444, 540)
-		      .setSize(400, 30)
-		        .setFont(pnRegular)
-		            .setColor(negro).setColorForeground(blanco).setColorBackground(blanco).setColorActive(blanco).setColorLabel(blanco);;;
-		              ;
-		              
-		        	  cp5.addTextfield(" ")
-		  		    .setPosition(325, 404)
-		  		      .setSize(71, 71)
-		  		       .setText("2")
-		  		        .setFont(pnRegularBig)
-		  		            .setColor(gris).setColorForeground(transp).setColorBackground(transp).setColorActive(transp).setColorLabel(transp).align(ControlP5.CENTER, ControlP5.CENTER, ControlP5.CENTER, ControlP5.CENTER);;;
-		  		              ;
-		  		              
-		  		    		time = cp5.get(Textfield.class, " ").getText();
-		  		  		System.out.println("Time: " + time);
-		  		  		timeInt = Integer.parseInt(time);
-		  		  		System.out.println("timeInt: " + timeInt);
+
+		cp5.addTextfield("").setPosition(444, 540).setSize(400, 30).setFont(pnRegular).setColor(negro)
+				.setColorForeground(blanco).setColorBackground(blanco).setColorActive(blanco).setColorLabel(blanco);
+		;
+		;
+		;
+
+		cp5.addTextfield(" ").setPosition(311, 431).setSize(80, 71).setText("26").setFont(pnBoldTwo).setColor(gris)
+				.setColorForeground(transp).setColorBackground(transp).setColorActive(transp).setColorLabel(transp)
+				.align(ControlP5.CENTER, ControlP5.CENTER, ControlP5.CENTER, ControlP5.CENTER);
+		;
+		;
+		;
+
+		idealH = cp5.get(Textfield.class, " ").getText();
+		System.out.println("Time: " + idealH);
+		idealInt = Integer.parseInt(idealH);
+		System.out.println("idealInt: " + idealInt);
 	}
 
 	public void home() {
@@ -132,6 +128,10 @@ public class UserInterface extends Thread {
 		playButton();
 		cp5.get("").hide();
 		cp5.get(" ").show();
+		idealH = cp5.get(Textfield.class, " ").getText();
+		if (idealH.matches("-?\\d+")) {
+			idealInt = Integer.parseInt(idealH);
+		}
 	}
 
 	public void playButton() {
@@ -152,24 +152,21 @@ public class UserInterface extends Thread {
 	}
 
 	public void click() {
-		switch (screens) {
-		case 2:
-			if (app.mouseX > 52 && app.mouseX < 246 && app.mouseY > 733 && app.mouseY < 775) {
-				play = !play;
-			}
-			if (app.mouseX > 1035 && app.mouseX < 1235 && app.mouseY > 736 && app.mouseY < 776) {
-				screens = 1;
-			}
-			break;
+
+		if (app.mouseX > 52 && app.mouseX < 246 && app.mouseY > 733 && app.mouseY < 775) {
+			play = !play;
 		}
+		if (app.mouseX > 1035 && app.mouseX < 1235 && app.mouseY > 736 && app.mouseY < 776) {
+			screens = 1;
+		}
+
 	}
-	
+
 	public void key() {
 
 	}
 
-	
-	//GETTERS Y SETTERS
+	// GETTERS Y SETTERS
 
 	public boolean isPlay() {
 		return play;
@@ -187,22 +184,21 @@ public class UserInterface extends Thread {
 		this.projectName = projectName;
 	}
 
-	public String getTime() {
-		return time;
+	public String getIdealH() {
+		return idealH;
 	}
 
-	public void setTime(String time) {
-		this.time = time;
+	public void setIdealH(String idealH) {
+		this.idealH = idealH;
 	}
 
-	public int getTimeInt() {
-		return timeInt;
+	public int getIdealInt() {
+		return idealInt;
 	}
 
-	public void setTimeInt(int timeInt) {
-		this.timeInt = timeInt;
+	public void setIdealInt(int idealInt) {
+		this.idealInt = idealInt;
 	}
-	
 
 	// FIN DE LA CLASE
 }

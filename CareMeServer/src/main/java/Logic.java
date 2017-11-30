@@ -13,6 +13,7 @@ public class Logic {
 		ui = new UserInterface(this, app);
 		ui.start();
 		a = new ArduinoConection(app);
+		a.start();
 	}
 
 	public void display() {
@@ -28,13 +29,12 @@ public class Logic {
 		case 2:
 			ui.home();
 			ui.showHumidity();
-			//f.sendData();
-			//f.readData();
 			break;
 		}
 	}
 
 	public void click() {
+		
 		switch (screens) {
 		case 1:
 			if (app.mouseX > 525 && app.mouseX < 728 && app.mouseY > 627 && app.mouseY < 661) {
@@ -44,7 +44,12 @@ public class Logic {
 				f.start();
 			}
 			break;
+		case 2:
+			ui.playButton();
+			ui.click();
+			break;
 		}
+		
 	}
 
 	public void key() {

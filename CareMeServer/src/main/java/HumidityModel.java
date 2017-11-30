@@ -1,13 +1,12 @@
 
 public class HumidityModel {
 
-	private int humidity, hour, minute, second;
+	private int humidity, hour, minute;
 
-	public HumidityModel(int humidity, int hour, int minute, int second) {
+	public HumidityModel(int humidity, int hour, int minute) {
 		this.humidity = humidity;
 		this.hour = hour;
 		this.minute = minute;
-		this.second = second;
 	}
 
 	public int getHumidity() {
@@ -32,14 +31,6 @@ public class HumidityModel {
 
 	public void setMinute(int minute) {
 		this.minute = minute;
-	}
-
-	public int getSecond() {
-		return second;
-	}
-
-	public void setSecond(int second) {
-		this.second = second;
 	}
 
 }

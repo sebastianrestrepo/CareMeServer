@@ -59,8 +59,7 @@ public class Firebase extends Thread {
 			try {
 
 				sendData();
-				//readData();
-				
+
 				sleep(delay);
 
 			} catch (InterruptedException e) {
@@ -81,26 +80,30 @@ public class Firebase extends Thread {
 
 		System.out.println("delay: " + delay);
 
-		System.out.println("Humedad: " + humidity + " a la hora: " + hour + ":" +
-	    minute + ":" + second);
+		System.out.println("Humedad: " + humidity + " a la hora: " + hour + ":" + minute + ":" + second);
 
-		ref.child(projectName).child("data").push().setValue(new HumidityModel(humidity, hour, minute, second));// escritura de datos
+		if (logic.getUi().isPlay()) {
+			ref.child(projectName).child("data").push().setValue(new HumidityModel(humidity, hour, minute));// escritura
+
+			ref.child(projectName).child("idealh").setValue(logic.getUi().getIdealInt());
+		}
+		// de datos
 		// }
-		//ref.child(projectName).child("actualhumidity").push().setValue(humidity);
+		// ref.child(projectName).child("actualhumidity").push().setValue(humidity);
 	}
-	
+
 	public void readData() {
 		ref.addValueEventListener(new ValueEventListener() {
-		    @Override
-		    public void onDataChange(DataSnapshot dataSnapshot) {
-		        HumidityModel post = dataSnapshot.getValue(HumidityModel.class);
-		        System.out.println("Post: " + post.getHumidity());
-		    }
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				HumidityModel post = dataSnapshot.getValue(HumidityModel.class);
+				System.out.println("Post: " + post.getHumidity());
+			}
 
-		    @Override
-		    public void onCancelled(DatabaseError databaseError) {
-		        System.out.println("The read failed: " + databaseError.getCode());
-		    }
+			@Override
+			public void onCancelled(DatabaseError databaseError) {
+				System.out.println("The read failed: " + databaseError.getCode());
+			}
 		});
 	}
 
@@ -112,7 +115,5 @@ public class Firebase extends Thread {
 		this.humidity = humidity;
 	}
 
-	
-	
 	// FINAL DE LA CLASE FIREBASE
 }
